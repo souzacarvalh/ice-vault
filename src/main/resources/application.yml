@@ -1,5 +1,5 @@
 server:
-  contextPath: icevault
+  port: 8085
 
 spring:
   application:
@@ -22,6 +22,11 @@ spring:
       enabled: true
       path: /console
 
+oauth:
+  client-id: icefire#client
+  client-secret: icefire#client
+  signing-key:
+
 logging:
   level:
-    org.springframework: INFO
+    org.springframework: DEBUG
