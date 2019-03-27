@@ -1,5 +1,5 @@
-# Ice Vault
+# IceVault
 
-Welcome to Icefire Vault
+Welcome to IceVault
 
-Ice Vault is a place where you can keep your sensitive infomation secure and safe.
+The IceVault is a place where you can keep your sensitive infomation secure and safe.
