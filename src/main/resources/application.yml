@@ -1,0 +1,27 @@
+server:
+  contextPath: icevault
+
+spring:
+  application:
+    name: icevault
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.H2Dialect
+      showSql: true
+      formatSql: true
+      namingStrategy: org.hibernate.cfg.ImprovedNamingStrategy
+      jdbc.fetch_size: 200
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:icevault;DB_CLOSE_ON_EXIT=TRUE;
+    username: sa
+    password: sa
+  h2:
+    console:
+      enabled: true
+      path: /console
+
+logging:
+  level:
+    org.springframework: INFO
