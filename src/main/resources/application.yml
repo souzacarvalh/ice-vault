@@ -11,7 +11,7 @@ spring:
       jdbc.fetch_size: 200
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:icevault;DB_CLOSE_ON_EXIT=TRUE;
+    url: jdbc:h2:mem:icevault;DB_CLOSE_ON_EXIT=TRUE;COMPRESS=TRUE;
     username: sa
     password: sa
   h2:
@@ -25,4 +25,4 @@ oauth:
 
 logging:
   level:
-    org.springframework: TRACE
+    org.springframework: INFO
