@@ -1,7 +1,6 @@
 package ee.icefire.vault.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,33 +13,21 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private static final String GRANT_TYPE_PASSWORD = "password";
     private static final String AUTHORIZATION_CODE = "authorization_code";
     private static final String REFRESH_TOKEN = "refresh_token";
-    private static final String SCOPE_OPENID = "openid";
+    private static final String SCOPE_READ = "read";
+    private static final String SCOPE_WRITE = "write";
+    private static final String TRUST = "trust";
+    private static final int VALID_FOREVER = -1;
+
+    private static final String CLIENT_ID = "icefire";
+    static final String CLIENT_SECRET = "{bcrypt}$2a$12$Xxk/KyGxKyrGDeuw.YCa5up51GJ.BjoqdTd/vKBwFj7LUQ/vuSLQC";
 
     @Autowired
     AuthenticationManager authenticationManager;
-
-    @Autowired
-    VaultUserDetailsService vaultUserDetailsService;
-
-    @Value("${oauth.client-id}")
-    private String clientId;
-
-    @Value("${oauth.client-secret}")
-    private String clientSecret;
-
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient(clientId)
-                .secret(clientSecret)
-                .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN)
-                .scopes(SCOPE_OPENID);
-    }
 
     @Bean
     public TokenStore tokenStore() {
@@ -48,9 +35,19 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
     @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients
+                .inMemory()
+                .withClient(CLIENT_ID)
+                .secret(CLIENT_SECRET)
+                .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN)
+                .scopes(SCOPE_READ, SCOPE_WRITE, TRUST)
+                .accessTokenValiditySeconds(VALID_FOREVER)
+                .refreshTokenValiditySeconds(VALID_FOREVER);
+    }
+
+    @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.tokenStore(tokenStore())
-                .authenticationManager(authenticationManager)
-                .userDetailsService(vaultUserDetailsService);
+        endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager);
     }
 }

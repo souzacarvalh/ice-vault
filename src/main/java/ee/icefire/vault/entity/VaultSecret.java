@@ -17,8 +17,8 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "SECRET_DATA")
-public class SecretData implements MappingSupport {
+@Table(name = "VAULT_SECRET")
+public class VaultSecret implements MappingSupport {
 
     @Id
     @Column(name = "SECRET_ID")
@@ -71,7 +71,7 @@ public class SecretData implements MappingSupport {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SecretData that = (SecretData) o;
+        VaultSecret that = (VaultSecret) o;
         return Objects.equals(secretId, that.secretId);
     }
 

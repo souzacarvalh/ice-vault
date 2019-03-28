@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by Felipe Carvalho on 2019-03-25.
  */
 
-public class SecretDataResource extends ResourceSupport implements MappingSupport, Serializable {
+public class VaultSecretResource extends ResourceSupport implements MappingSupport, Serializable {
 
     @NotNull
     private String data;

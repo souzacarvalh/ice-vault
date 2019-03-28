@@ -1,6 +1,3 @@
-server:
-  port: 8085
-
 spring:
   application:
     name: icevault
@@ -23,10 +20,9 @@ spring:
       path: /console
 
 oauth:
-  client-id: icefire#client
-  client-secret: icefire#client
-  signing-key:
+  client-id: icefire
+  client-secret: "{bcrypt}$2a$12$Xxk/KyGxKyrGDeuw.YCa5up51GJ.BjoqdTd/vKBwFj7LUQ/vuSLQC"
 
 logging:
   level:
-    org.springframework: DEBUG
+    org.springframework: INFO

@@ -1,17 +1,21 @@
 package ee.icefire.vault.controller;
 
-import ee.icefire.vault.resource.SecretDataResource;
-import ee.icefire.vault.service.SecretDataService;
+import ee.icefire.vault.resource.VaultSecretResource;
+import ee.icefire.vault.service.VaultSecretService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -20,23 +24,30 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/secret")
+@PreAuthorize("hasRole('ADMIN') or hasRole('ROLE_ENCRYPTOR')")
 public class VaultSecretController {
 
     @Autowired
-    private SecretDataService secretDataService;
+    private VaultSecretService secretDataService;
 
-    @PostMapping("/encrypt")
-    public void encrypt(@Valid @RequestBody SecretDataResource secretDataResource) {
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveSecret(@Valid @RequestBody VaultSecretResource secretDataResource) {
         secretDataService.save(secretDataResource);
     }
 
-    @GetMapping("/decrypt")
-    public SecretDataResource decrypt(@Valid @RequestBody SecretDataResource secretData) {
-        return null;
+    @GetMapping("/{secretId}")
+    public VaultSecretResource getSecret(@PathParam("secretId") Long secretId) {
+        return secretDataService.getSecretById(secretId);
     }
 
     @GetMapping
-    public List<SecretDataResource> listSecrets(@RequestParam String userId) {
-        return Collections.emptyList();
+    public List<VaultSecretResource> listSecrets(@RequestParam Long userId) {
+        return secretDataService.listSecretsByUser(userId);
+    }
+
+    @DeleteMapping("/{secretId}")
+    public void deleteSecret(@PathParam("secretId") Long secretId) {
+        secretDataService.delete(secretId);
     }
 }

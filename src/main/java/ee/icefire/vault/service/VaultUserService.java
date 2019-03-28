@@ -6,6 +6,7 @@ import ee.icefire.vault.exception.VaultUserNotFoundException;
 import ee.icefire.vault.repository.VaultUserRepository;
 import ee.icefire.vault.resource.VaultUserResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,27 +27,38 @@ public class VaultUserService {
     @Autowired
     private VaultKeyService vaultKeyService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public VaultUser getUser(Long userId) {
+        Optional<VaultUser> vaultUserOpt = vaultUserRepository.findById(userId);
+        VaultUser vaultUser = vaultUserOpt.orElseThrow(VaultUserNotFoundException::new);
+        return vaultUser;
+    }
+
     public VaultUserResource findByUserId(final Long userId) {
         Optional<VaultUser> vaultUserOpt = vaultUserRepository.findById(userId);
-        VaultUser vaultUser = vaultUserOpt.orElseThrow(() -> new VaultUserNotFoundException("Vault user not found."));
+        VaultUser vaultUser = vaultUserOpt.orElseThrow(VaultUserNotFoundException::new);
         return vaultUser.transform(VaultUserResource.class);
     }
 
     public VaultUserResource findByUsername(final String username) {
         VaultUser vaultUser = Optional.ofNullable(vaultUserRepository.findByUsername(username))
-                .orElseThrow(() -> new VaultUserNotFoundException("Vault user not found."));
+                .orElseThrow(VaultUserNotFoundException::new);
         return vaultUser.transform(VaultUserResource.class);
     }
 
     public List<VaultUserResource> list() {
-        List<VaultUser> licenses = vaultUserRepository.findAll();
-        return licenses.stream().map(license -> license.transform(VaultUserResource.class))
+        List<VaultUser> users = vaultUserRepository.findAll();
+        return users.stream().map(user -> user.transform(VaultUserResource.class))
                 .collect(Collectors.toList());
     }
 
     public void save(final VaultUserResource userResource) {
         VaultUser vaultUser = userResource.transform(VaultUser.class);
         vaultUser.setCreatedDate(LocalDate.now());
+        vaultUser.setPassword(passwordEncoder.encode(userResource.getPassword()));
+        vaultUser.setEnabled(true);
 
         VaultKey keyPair = vaultKeyService.generateVaultKey();
         keyPair.setVaultUser(vaultUser);
@@ -57,7 +69,7 @@ public class VaultUserService {
 
     public void delete(final String username) {
         VaultUser vaultUser = Optional.ofNullable(vaultUserRepository.findByUsername(username))
-                .orElseThrow(() -> new VaultUserNotFoundException("Vault user not found."));
+                .orElseThrow(VaultUserNotFoundException::new);
         vaultUserRepository.delete(vaultUser);
     }
 }

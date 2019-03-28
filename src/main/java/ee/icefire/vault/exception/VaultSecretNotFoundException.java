@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Created by Felipe Carvalho on 2019-03-26.
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class VaultUserNotFoundException extends RuntimeException {
+public class VaultSecretNotFoundException extends RuntimeException {
 
-    public VaultUserNotFoundException() {
-        super("Vault user not found.");
+    public VaultSecretNotFoundException() {
+        super("Vault Secret not found.");
     }
 }
