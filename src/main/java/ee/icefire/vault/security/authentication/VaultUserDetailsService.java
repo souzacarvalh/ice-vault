@@ -1,4 +1,4 @@
-package ee.icefire.vault.security;
+package ee.icefire.vault.security.authentication;
 
 import ee.icefire.vault.entity.VaultUser;
 import ee.icefire.vault.repository.VaultUserRepository;

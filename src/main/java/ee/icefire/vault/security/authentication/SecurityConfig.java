@@ -1,4 +1,4 @@
-package ee.icefire.vault.security;
+package ee.icefire.vault.security.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

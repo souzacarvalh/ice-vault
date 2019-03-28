@@ -1,5 +1,6 @@
-package ee.icefire.vault.security;
+package ee.icefire.vault.security.authorization;
 
+import ee.icefire.vault.security.authentication.VaultUserPrincipal;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

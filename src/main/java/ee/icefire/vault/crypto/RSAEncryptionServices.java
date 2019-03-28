@@ -40,6 +40,10 @@ public class RSAEncryptionServices {
         }
     }
 
+    public KeyPair getKeyPair(String base64PublicKey, String base64PrivateKey) {
+        return new KeyPair(getPublicKey(base64PublicKey), getPrivateKey(base64PrivateKey));
+    }
+
     public String encrypt(String data, PublicKey publicKey) {
         try {
             Cipher cipher = Cipher.getInstance(RSA_ALGORITHM_PKCS);

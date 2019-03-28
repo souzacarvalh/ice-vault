@@ -1,4 +1,4 @@
-package ee.icefire.vault.security;
+package ee.icefire.vault.security.authorization;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
