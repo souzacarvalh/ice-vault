@@ -4,6 +4,7 @@ import ee.icefire.vault.crypto.RSAEncryptionServices;
 import ee.icefire.vault.entity.VaultKey;
 import ee.icefire.vault.entity.VaultSecret;
 import ee.icefire.vault.entity.VaultUser;
+import ee.icefire.vault.exception.VaultInvalidEncryptationException;
 import ee.icefire.vault.exception.VaultSecretNotFoundException;
 import ee.icefire.vault.repository.VaultSecretRepository;
 import ee.icefire.vault.resource.VaultSecretResource;
@@ -62,12 +63,15 @@ public class VaultSecretService {
      * using the user's RSA private for exchanging
      **/
     private String encryptPassphraseWithPrivateKey(final VaultKey vaultKey, final String encryptedPassphrase) {
+        try {
+            PrivateKey privateKey = rsaEncryptionServices.getPrivateKey(vaultKey.getPrivateKey());
 
-        PrivateKey privateKey = rsaEncryptionServices.getPrivateKey(vaultKey.getPrivateKey());
+            String passphrase = rsaEncryptionServices.decrypt(encryptedPassphrase.getBytes(), privateKey);
 
-        String passphrase = rsaEncryptionServices.decrypt(encryptedPassphrase.getBytes(), privateKey);
-
-        return rsaEncryptionServices.encrypt(passphrase, privateKey);
+            return rsaEncryptionServices.encrypt(passphrase, privateKey);
+        } catch (Exception e) {
+            throw new VaultInvalidEncryptationException();
+        }
     }
 
     public void delete(final Long secretId) {

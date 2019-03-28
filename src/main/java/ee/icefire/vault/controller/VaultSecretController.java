@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/secret")
-@PreAuthorize("hasRole('ADMIN') or hasRole('ROLE_ENCRYPTOR')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('ENCRYPT')")
 public class VaultSecretController {
 
     @Autowired

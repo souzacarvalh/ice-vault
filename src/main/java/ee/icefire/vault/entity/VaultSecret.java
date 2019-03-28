@@ -1,6 +1,9 @@
 package ee.icefire.vault.entity;
 
 import ee.icefire.vault.mapping.MappingSupport;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +21,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "VAULT_SECRET")
+@FilterDef(name = "VAULT_USER_FILTER", parameters = @ParamDef(name = "userId", type = "long"))
+@Filter(name = "VAULT_USER_FILTER", condition = "USER_ID = :userId")
 public class VaultSecret implements MappingSupport {
 
     @Id
