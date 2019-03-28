@@ -20,11 +20,8 @@ public class VaultUserPrincipal implements UserDetails {
         this.user = user;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList();
-        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.name())));
-        return authorities;
+    public Long getId() {
+        return user.getUserId();
     }
 
     @Override
@@ -55,5 +52,16 @@ public class VaultUserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         return user.isEnabled();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList();
+        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.name())));
+        return authorities;
+    }
+
+    public String getPublicKey() {
+        return user.getVaultKey().getPublicKey();
     }
 }
