@@ -23,8 +23,8 @@ public class VaultTokenEnhancer implements TokenEnhancer {
 
         final Map<String, Object> additionalInfo = new HashMap<>();
 
-        additionalInfo.put("user-id", vaultUser.getId());
-        additionalInfo.put("public-key", vaultUser.getPublicKey());
+        additionalInfo.put("user_id", vaultUser.getId());
+        additionalInfo.put("public_key", vaultUser.getPublicKey());
 
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
