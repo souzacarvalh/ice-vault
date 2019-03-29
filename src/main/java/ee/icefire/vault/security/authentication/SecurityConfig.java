@@ -25,7 +25,7 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(AccessManagementOrder.LOWEST_PRIORITY)
+@Order
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -70,8 +70,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .frameOptions().sameOrigin();
     }
-}
-
-class AccessManagementOrder {
-    public static final int LOWEST_PRIORITY = -99;
 }

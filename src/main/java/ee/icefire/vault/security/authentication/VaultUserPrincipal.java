@@ -62,6 +62,9 @@ public class VaultUserPrincipal implements UserDetails {
     }
 
     public String getPublicKey() {
-        return user.getVaultKey().getPublicKey();
+        if (user.getVaultKey() != null) {
+            return user.getVaultKey().getPublicKey();
+        }
+        return "";
     }
 }
