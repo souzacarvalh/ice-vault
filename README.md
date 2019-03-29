@@ -12,7 +12,7 @@ When he creates a new "secret" (sensitive data), the system will actually encryp
 
 When the user wants to retrieve the secret and check it as plain text, the server will send him the encrypted data which can be only descrypted having the corresponding key.
 
-To avoid interception, the HTTPS should always be enabled in production servers with the proper signed certificates.
+To avoid any interception on the wire, the HTTPS should always be enabled in production servers with the proper signed certificates.
 
 ## How do I run it?
 
