@@ -7,10 +7,9 @@ import org.hibernate.annotations.ParamDef;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -26,27 +25,16 @@ import java.util.Objects;
 public class VaultSecret implements MappingSupport {
 
     @Id
-    @Column(name = "SECRET_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long secretId;
-
-    @Column(name = "DATA", columnDefinition = "CLOB")
+    @Column(name = "DATA")
     private String data;
 
-    @Column(name = "PASSPHRASE", columnDefinition = "CLOB")
+    @Lob
+    @Column(name = "PASSPHRASE", nullable = false, columnDefinition = "CLOB")
     private String passphrase;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", nullable = false)
     private VaultUser vaultUser;
-
-    public Long getSecretId() {
-        return secretId;
-    }
-
-    public void setSecretId(Long secretId) {
-        this.secretId = secretId;
-    }
 
     public String getData() {
         return data;
@@ -77,11 +65,11 @@ public class VaultSecret implements MappingSupport {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VaultSecret that = (VaultSecret) o;
-        return Objects.equals(secretId, that.secretId);
+        return Objects.equals(data, that.data);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(secretId);
+        return Objects.hash(data);
     }
 }

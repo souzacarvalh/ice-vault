@@ -55,7 +55,7 @@ public class VaultUser implements MappingSupport {
     @Column(name = "ENABLED", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean enabled;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "vaultUser")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "vaultUser", fetch = FetchType.LAZY)
     private VaultKey vaultKey;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -68,16 +68,8 @@ public class VaultUser implements MappingSupport {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -88,10 +80,6 @@ public class VaultUser implements MappingSupport {
         this.password = password;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
@@ -100,24 +88,12 @@ public class VaultUser implements MappingSupport {
         return accountExpired;
     }
 
-    public void setAccountExpired(boolean accountExpired) {
-        this.accountExpired = accountExpired;
-    }
-
     public boolean isAccountLocked() {
         return accountLocked;
     }
 
-    public void setAccountLocked(boolean accountLocked) {
-        this.accountLocked = accountLocked;
-    }
-
     public boolean isCredentialExpired() {
         return credentialExpired;
-    }
-
-    public void setCredentialExpired(boolean credentialExpired) {
-        this.credentialExpired = credentialExpired;
     }
 
     public boolean isEnabled() {
@@ -138,10 +114,6 @@ public class VaultUser implements MappingSupport {
 
     public List<VaultRole> getRoles() {
         return roles;
-    }
-
-    public void setRoles(List<VaultRole> roles) {
-        this.roles = roles;
     }
 
     @Override

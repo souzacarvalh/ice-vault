@@ -24,11 +24,10 @@ public class AESEncryptionService {
 
     private static final String AES_ALGORITHM = "AES";
     private static final String AES_ALGORITHM_CBC = "AES/CBC/PKCS5Padding";
-    private static final String IV = "icefire$icefire$";
 
-    public String encrypt(String data, String passphrase) {
+    public String encrypt(String data, String passphrase, String ivKey) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(IV.getBytes(StandardCharsets.UTF_8));
+            IvParameterSpec iv = new IvParameterSpec(ivKey.getBytes(StandardCharsets.UTF_8));
             SecretKeySpec secretKeySpec = new SecretKeySpec(passphrase.getBytes(StandardCharsets.UTF_8), AES_ALGORITHM);
 
             Cipher cipher = Cipher.getInstance(AES_ALGORITHM_CBC);
@@ -42,9 +41,9 @@ public class AESEncryptionService {
         }
     }
 
-    public String decrypt(String data, String passphrase) {
+    public String decrypt(String data, String passphrase, String ivKey) {
         try {
-            IvParameterSpec iv = new IvParameterSpec(IV.getBytes(StandardCharsets.UTF_8));
+            IvParameterSpec iv = new IvParameterSpec(ivKey.getBytes(StandardCharsets.UTF_8));
             SecretKeySpec secretKeySpec = new SecretKeySpec(passphrase.getBytes(StandardCharsets.UTF_8), AES_ALGORITHM);
 
             Cipher cipher = Cipher.getInstance(AES_ALGORITHM_CBC);

@@ -32,8 +32,8 @@ public class VaultSecretController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveSecret(@Valid @RequestBody VaultSecretResource secretDataResource) {
-        secretDataService.save(secretDataResource);
+    public List<VaultSecretResource> saveSecret(@Valid @RequestBody VaultSecretResource secretDataResource) {
+        return secretDataService.save(secretDataResource);
     }
 
     @GetMapping("/{secretId}")

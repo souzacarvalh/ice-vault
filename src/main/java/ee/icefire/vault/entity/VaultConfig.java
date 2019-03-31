@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -22,45 +23,23 @@ public class VaultConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long configId;
 
-    @Column(name = "EXCHANGE_PUBLIC_KEY", columnDefinition = "CLOB")
+    @Lob
+    @Column(name = "EXCHANGE_PUBLIC_KEY")
     private String exchangePublicKey;
 
-    @Column(name = "EXCHANGE_PRIVATE_KEY", columnDefinition = "CLOB")
+    @Lob
+    @Column(name = "EXCHANGE_PRIVATE_KEY")
     private String exchangePrivateKey;
 
     @Column(name = "LAST_MODIFICATION_DATE", nullable = false)
     private LocalDateTime lastModDate;
 
-    public Long getConfigId() {
-        return configId;
-    }
-
-    public void setConfigId(Long configId) {
-        this.configId = configId;
-    }
-
     public String getExchangePublicKey() {
         return exchangePublicKey;
     }
 
-    public void setExchangePublicKey(String exchangePublicKey) {
-        this.exchangePublicKey = exchangePublicKey;
-    }
-
     public String getExchangePrivateKey() {
         return exchangePrivateKey;
-    }
-
-    public void setExchangePrivateKey(String exchangePrivateKey) {
-        this.exchangePrivateKey = exchangePrivateKey;
-    }
-
-    public LocalDateTime getLastModDate() {
-        return lastModDate;
-    }
-
-    public void setLastModDate(LocalDateTime lastModDate) {
-        this.lastModDate = lastModDate;
     }
 
     @Override

@@ -12,4 +12,5 @@ import java.util.List;
 public interface VaultSecretRepository extends JpaRepository<VaultSecret, Long> {
 
     List<VaultSecret> findByVaultUser(VaultUser vaultUser);
+
 }

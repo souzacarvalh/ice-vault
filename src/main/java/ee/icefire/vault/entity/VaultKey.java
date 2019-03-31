@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -23,23 +24,17 @@ public class VaultKey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long keyId;
 
-    @Column(name = "PUBLIC_KEY", columnDefinition = "CLOB")
+    @Lob
+    @Column(name = "PUBLIC_KEY")
     private String publicKey;
 
-    @Column(name = "PRIVATE_KEY", columnDefinition = "CLOB")
+    @Lob
+    @Column(name = "PRIVATE_KEY")
     private String privateKey;
 
     @OneToOne
     @JoinColumn(name = "USER_ID")
     private VaultUser vaultUser;
-
-    public Long getKeyId() {
-        return keyId;
-    }
-
-    public void setKeyId(Long keyId) {
-        this.keyId = keyId;
-    }
 
     public String getPublicKey() {
         return publicKey;
@@ -55,10 +50,6 @@ public class VaultKey {
 
     public void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
-    }
-
-    public VaultUser getVaultUser() {
-        return vaultUser;
     }
 
     public void setVaultUser(VaultUser vaultUser) {

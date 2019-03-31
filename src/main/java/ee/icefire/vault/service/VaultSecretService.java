@@ -46,7 +46,8 @@ public class VaultSecretService {
                 .collect(Collectors.toList());
     }
 
-    public void save(final VaultSecretResource vaultSecretResource) {
+
+    public List<VaultSecretResource> save(final VaultSecretResource vaultSecretResource) {
         VaultUser vaultUser = vaultUserService.getUser(vaultSecretResource.getUserId());
 
         VaultSecret vaultSecret = vaultSecretResource.transform(VaultSecret.class);
@@ -55,7 +56,9 @@ public class VaultSecretService {
         String encryptedPassphrase = encryptPassphraseWithPrivateKey(vaultUser.getVaultKey(), vaultSecretResource.getPassphrase());
         vaultSecret.setPassphrase(encryptedPassphrase);
 
-        vaultSecretRepository.save(vaultSecret);
+        vaultSecretRepository.saveAndFlush(vaultSecret);
+
+        return listSecretsByUser(vaultUser.getUserId());
     }
 
     /**
