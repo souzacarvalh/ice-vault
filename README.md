@@ -15,6 +15,14 @@ When the user wants to retrieve the secret and check it as plain text, the serve
 
 To avoid any interception on the wire, the HTTPS should always be enabled in production servers with the proper signed certificates.
 
+# Features
+
+- User and Secret Management over REST API
+- Spring Security based authentication and authorization (OAuth2 + JWT)
+- Secret Hybrid Encryption/Decryption with Assymetric RSA (public/private) + AES (16Bit Random Passphrase)
+- Users Password protected 'at rest' by BCrypt algorithm (Salted)
+- Cloud Native Application
+
 ## How do I run it?
 
 Execute 'gradle bootRun' it will start up a dev server on http://localhost:9191.
@@ -32,7 +40,13 @@ Headers: 'Basic aWNlZmlyZTppY2VmaXJl'
 
 **User Management**
 
-This resource is only available for authorized ADMIN users.
+This resource is only available for authorized ADMIN users. You can use one of the following for testing:
+
+Username: admin
+Password: 12345
+
+Username felipec
+Password: 12345
 
 **- Create User:** 
 
