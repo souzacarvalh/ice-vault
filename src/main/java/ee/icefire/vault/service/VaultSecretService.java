@@ -23,13 +23,10 @@ import java.util.stream.Collectors;
 @Service
 public class VaultSecretService {
 
-    @Autowired
     private VaultSecretRepository vaultSecretRepository;
 
-    @Autowired
     private VaultUserService vaultUserService;
 
-    @Autowired
     private RSAEncryptionServices rsaEncryptionServices;
 
     public VaultSecretResource getSecretById(final Long secretId) {
@@ -78,8 +75,22 @@ public class VaultSecretService {
     }
 
     public void delete(final Long secretId) {
-        Optional<VaultSecret> vaultSecret = Optional.ofNullable(vaultSecretRepository.findById(secretId))
-                .orElseThrow(VaultSecretNotFoundException::new);
-        vaultSecretRepository.delete(vaultSecret.get());
+        Optional<VaultSecret> vaultSecret = vaultSecretRepository.findById(secretId);
+        vaultSecretRepository.delete(vaultSecret.orElseThrow(VaultSecretNotFoundException::new));
+    }
+
+    @Autowired
+    public void setVaultSecretRepository(VaultSecretRepository vaultSecretRepository) {
+        this.vaultSecretRepository = vaultSecretRepository;
+    }
+
+    @Autowired
+    public void setVaultUserService(VaultUserService vaultUserService) {
+        this.vaultUserService = vaultUserService;
+    }
+
+    @Autowired
+    public void setRsaEncryptionServices(RSAEncryptionServices rsaEncryptionServices) {
+        this.rsaEncryptionServices = rsaEncryptionServices;
     }
 }

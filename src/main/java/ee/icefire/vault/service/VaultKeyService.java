@@ -15,19 +15,23 @@ import java.util.Base64;
 @Service
 public class VaultKeyService {
 
-    @Autowired
     private RSAEncryptionServices rsaEncryptionServices;
 
     public VaultKey generateVaultKey() {
-            KeyPair keyPair = rsaEncryptionServices.getKeyPair();
+        KeyPair keyPair = rsaEncryptionServices.getKeyPair();
 
-            String publicKey = Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
-            String privateKey = Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded());
+        String publicKey = Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
+        String privateKey = Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded());
 
-            VaultKey vaultKey = new VaultKey();
-            vaultKey.setPublicKey(publicKey);
-            vaultKey.setPrivateKey(privateKey);
+        VaultKey vaultKey = new VaultKey();
+        vaultKey.setPublicKey(publicKey);
+        vaultKey.setPrivateKey(privateKey);
 
-            return vaultKey;
+        return vaultKey;
+    }
+
+    @Autowired
+    public void setRsaEncryptionServices(RSAEncryptionServices rsaEncryptionServices) {
+        this.rsaEncryptionServices = rsaEncryptionServices;
     }
 }

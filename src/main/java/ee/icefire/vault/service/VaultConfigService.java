@@ -18,13 +18,10 @@ import java.util.Optional;
 @Service
 public class VaultConfigService {
 
-    @Autowired
     private Environment env;
 
-    @Autowired
     private VaultConfigRepository vaultConfigRepository;
 
-    @Autowired
     private RSAEncryptionServices rsaEncryptionServices;
 
     public Environment getEnv() {
@@ -40,5 +37,20 @@ public class VaultConfigService {
         VaultConfig vaultConfig = getConfig();
         return rsaEncryptionServices.getKeyPair(vaultConfig.getExchangePublicKey()
                 , vaultConfig.getExchangePrivateKey());
+    }
+
+    @Autowired
+    public void setEnvironment(Environment env) {
+        this.env = env;
+    }
+
+    @Autowired
+    public void setVaultConfigRepository(VaultConfigRepository vaultConfigRepository) {
+        this.vaultConfigRepository = vaultConfigRepository;
+    }
+
+    @Autowired
+    public void setRsaEncryptionServices(RSAEncryptionServices rsaEncryptionServices) {
+        this.rsaEncryptionServices = rsaEncryptionServices;
     }
 }

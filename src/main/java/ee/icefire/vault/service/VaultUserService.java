@@ -21,13 +21,10 @@ import java.util.stream.Collectors;
 @Service
 public class VaultUserService {
 
-    @Autowired
     private VaultUserRepository vaultUserRepository;
 
-    @Autowired
     private VaultKeyService vaultKeyService;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public VaultUser getUser(Long userId) {
@@ -71,5 +68,20 @@ public class VaultUserService {
         VaultUser vaultUser = Optional.ofNullable(vaultUserRepository.findByUsername(username))
                 .orElseThrow(VaultUserNotFoundException::new);
         vaultUserRepository.delete(vaultUser);
+    }
+
+    @Autowired
+    public void setVaultUserRepository(VaultUserRepository vaultUserRepository) {
+        this.vaultUserRepository = vaultUserRepository;
+    }
+
+    @Autowired
+    public void setVaultKeyService(VaultKeyService vaultKeyService) {
+        this.vaultKeyService = vaultKeyService;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }
