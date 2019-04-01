@@ -19,6 +19,46 @@ To avoid any interception on the wire, the HTTPS should always be enabled in pro
 Execute 'gradle bootRun' it will start up a dev server on http://localhost:9191.
 To change the port add --server.port=<SERVER_PORT> to the start command
 
+# Endpoints
+
+- OAuth Token: 
+
+Method:GET
+Resource: /oauth/token?grant_type=password&username=<username>&password=<password>
+Headers: 'Basic aWNlZmlyZTppY2VmaXJl'
+
+User Management (Only Admin Users):
+
+- Create User: 
+
+Method: POST
+Resource: api/user
+Request Body:
+{
+	"username": "joe",
+	"password": "12345",
+	"roles": [
+		"ROLE_ENCRYPT"
+	]
+}
+
+Possible Roles: ROLE_ADMIN, ROLE_ENCRYPT
+
+- Get User
+
+Method:GET
+Resource: /api/user/{username}
+
+- List Users
+
+Method:GET
+Resource: /api/user
+
+- Delete Users
+
+Method:DELETE
+Resource: /api/user/{username}
+
 ## Dev Requirements
 
 JDK8 and Gradle 
